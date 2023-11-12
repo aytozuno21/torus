@@ -20,7 +20,7 @@ export function mediaType(file: string) {
 export function isMediaFile(file: string) {
   return file?.endsWith(".mkv") || file?.endsWith(".mp4");
 }
-
+ 
 export const getTorrentInfo = async (torrentId: string): Promise<TorrentInfo> =>
   new Promise((resolve, reject) => {
     const t = client.get(torrentId);
