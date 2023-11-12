@@ -1,4 +1,4 @@
-import { YtsMovie } from "types";
+import { YtsMovie } from "@/types";
 
 export default function MovieCard({
 	movie: { large_cover_image: cover },

@@ -1,18 +1,32 @@
-import useSWR from "swr"
-import { TorrentInfo } from "types"
+import { useQuery } from "@tanstack/react-query";
+import { TorrentInfo } from "@/types";
 
-const fetcher = async (url: string) =>
-	fetch(url).then(res => res.ok ? res.json() : undefined)
+const fetcher = async (infohash: string) => {
+  const res = await fetch(`/api/torrent/${infohash}`);
+
+  console.log("ressy", res)
+
+  if (!res.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return res.json();
+};
 
 export default function useTorrentInfo(infohash: string) {
-	const {data, error, isLoading} = useSWR(`/api/torrent/${infohash}`, fetcher)
-	return {
-		torrent: data,
-		error,
-		isLoading
-	} as {
-			torrent: TorrentInfo|undefined,
-			error: string|undefined,
-			isLoading: boolean
-	}
+  const { data, error, isLoading } = useQuery({
+    queryKey: [infohash],
+    queryFn: () => fetcher(infohash),
+  });
+
+  console.log(data);
+
+  return {
+    torrent: data,
+    error,
+    isLoading,
+  } as {
+    torrent: TorrentInfo | null;
+    error: Error | null;
+    isLoading: boolean;
+  };
 }

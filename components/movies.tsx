@@ -1,4 +1,4 @@
-import { useMovies } from "core/hooks/yts";
+import { useMovies } from "@/core/hooks/yts";
 import MovieCard from "./movie_card";
 import { useEffect, useMemo } from "react";
 
